@@ -15,8 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 public class WebSecurityConfiguration {
 
-	private static final String[] WHITE_LIST_URLS = { "/hello", "/register", "/verifyRegistration*",
-			"/resendVerifyToken*" };
+	private static final String[] WHITE_LIST_URLS = { "/hello", "/register", "/verifyRegistration*", "/resetPassword*",
+			"/resendVerifyToken*", "/savePassword*", "/changePassword*" };
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -24,7 +24,7 @@ public class WebSecurityConfiguration {
 	}
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
 				auth -> auth.requestMatchers(WHITE_LIST_URLS).permitAll().requestMatchers("/api/**").authenticated())
 				.httpBasic(Customizer.withDefaults()).build();
